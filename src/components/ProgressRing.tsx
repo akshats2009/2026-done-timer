@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { BorderBeam } from "@/components/ui/border-beam";
 
 interface ProgressRingProps {
   percentage: number;
@@ -49,17 +48,19 @@ export function ProgressRing({
 
   return (
     <div className="relative inline-flex items-center justify-center">
-      <div className="absolute -inset-6 rounded-full border border-border/20">
-        <BorderBeam
-          size={80}
-          duration={8}
-          colorFrom={ACCENT}
-          colorTo={ACCENT}
-          borderWidth={1}
-        />
-      </div>
+      {/* Outer glass ring */}
+      <div
+        className="absolute -inset-6 rounded-full
+          shadow-[0_0_6px_rgba(0,0,0,0.02),inset_2px_2px_0.5px_-2px_rgba(0,0,0,0.5),inset_-2px_-2px_0.5px_-2px_rgba(0,0,0,0.45),inset_0_0_4px_4px_rgba(0,0,0,0.06)]
+          dark:shadow-[0_0_6px_rgba(0,0,0,0.02),inset_2px_2px_0.5px_-2.5px_rgba(255,255,255,0.05),inset_-2px_-2px_0.5px_-2.5px_rgba(255,255,255,0.5),inset_0_0_4px_4px_rgba(255,255,255,0.06)]"
+      />
 
-      <div className="absolute -inset-3 rounded-full border border-border/10" />
+      {/* Inner glass ring */}
+      <div
+        className="absolute -inset-3 rounded-full
+          shadow-[inset_1px_1px_0.5px_-1px_rgba(0,0,0,0.3),inset_-1px_-1px_0.5px_-1px_rgba(0,0,0,0.25)]
+          dark:shadow-[inset_1px_1px_0.5px_-1px_rgba(255,255,255,0.03),inset_-1px_-1px_0.5px_-1px_rgba(255,255,255,0.03)]"
+      />
 
       <svg
         width={size}
@@ -90,7 +91,6 @@ export function ProgressRing({
           className="text-border/30"
         />
 
-        {/* Glow layer */}
         <circle
           cx={center}
           cy={center}
@@ -106,7 +106,6 @@ export function ProgressRing({
           className="blur-[6px] opacity-60"
         />
 
-        {/* Progress arc */}
         <circle
           ref={progressRef}
           cx={center}
@@ -127,14 +126,22 @@ export function ProgressRing({
           r={3}
           fill={ACCENT}
           className="transition-all duration-700"
-          style={{ transform: "rotate(90deg)", transformOrigin: `${center}px ${center}px` }}
+          style={{
+            transform: "rotate(90deg)",
+            transformOrigin: `${center}px ${center}px`,
+          }}
         />
       </svg>
 
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5">
-        <span className="text-[3.2rem] font-semibold leading-none tracking-tighter text-foreground sm:text-[3.8rem]" style={{ fontFamily: "var(--font-mono)" }}>
+        <span
+          className="text-[3.2rem] font-semibold leading-none tracking-tighter text-foreground sm:text-[3.8rem]"
+          style={{ fontFamily: "var(--font-mono)" }}
+        >
           {percentage.toFixed(2)}
-          <span className="text-[1.6rem] sm:text-[2rem] text-muted-foreground">%</span>
+          <span className="text-[1.6rem] sm:text-[2rem] text-muted-foreground">
+            %
+          </span>
         </span>
         <div className="flex items-center gap-1.5">
           <span className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />

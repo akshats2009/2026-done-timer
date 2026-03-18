@@ -6,7 +6,7 @@ import {
   Timer,
   Zap,
 } from "lucide-react";
-import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { GlassPanel } from "@/components/ui/glass-panel";
 import { cn } from "@/lib/utils";
 import type { YearProgressData } from "@/utils/yearProgress";
 
@@ -80,37 +80,34 @@ interface StatCardProps {
 function StatCard({ icon, label, value, sub, area }: StatCardProps) {
   return (
     <li className={cn("min-h-[9rem] list-none", area)}>
-      <div className="group relative h-full rounded-lg border border-border/40 p-px transition-colors hover:border-border/70">
-        <GlowingEffect
-          spread={40}
-          glow={true}
-          disabled={false}
-          proximity={64}
-          inactiveZone={0.01}
-          borderWidth={2}
-        />
-        <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[7px] bg-background/80 backdrop-blur-sm p-5 md:p-6">
-          <div className="absolute inset-x-0 top-0 h-px bg-purple-500 opacity-0 transition-opacity group-hover:opacity-100" />
-
+      <GlassPanel
+        intensity="medium"
+        className="group h-full transition-transform duration-300 hover:scale-[1.02]"
+      >
+        <div className="relative flex h-full flex-col justify-between p-5 md:p-6">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded border border-border/50 text-muted-foreground">
+            <GlassPanel
+              intensity="subtle"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground"
+            >
               {icon}
-            </div>
+            </GlassPanel>
             <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
               {label}
             </span>
           </div>
 
           <div className="mt-auto pt-3">
-            <p className="text-2xl font-semibold tracking-tight text-foreground tabular-nums md:text-3xl" style={{ fontFamily: "var(--font-mono)" }}>
+            <p
+              className="text-2xl font-semibold tracking-tight text-foreground tabular-nums md:text-3xl"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
               {value}
             </p>
-            <p className="mt-1 text-[11px] text-muted-foreground/60">
-              {sub}
-            </p>
+            <p className="mt-1 text-[11px] text-muted-foreground/60">{sub}</p>
           </div>
         </div>
-      </div>
+      </GlassPanel>
     </li>
   );
 }

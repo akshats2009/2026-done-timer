@@ -1,4 +1,4 @@
-import { BorderBeam } from "@/components/ui/border-beam";
+import { GlassPanel } from "@/components/ui/glass-panel";
 
 interface YearBadgeProps {
   year: number;
@@ -6,20 +6,19 @@ interface YearBadgeProps {
 
 export function YearBadge({ year }: YearBadgeProps) {
   return (
-    <div className="relative inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/60 px-4 py-1.5 backdrop-blur-sm">
-      <BorderBeam
-        size={30}
-        duration={4}
-        colorFrom="#a855f7"
-        colorTo="#a855f7"
-        borderWidth={1}
-      />
+    <GlassPanel
+      intensity="subtle"
+      className="inline-flex items-center gap-2 rounded-full px-4 py-1.5"
+    >
       <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500">
         <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-75" />
       </span>
-      <span className="text-xs font-medium tracking-widest text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+      <span
+        className="text-xs font-medium tracking-widest text-muted-foreground"
+        style={{ fontFamily: "var(--font-mono)" }}
+      >
         {year} &middot; LIVE
       </span>
-    </div>
+    </GlassPanel>
   );
 }
