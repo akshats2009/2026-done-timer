@@ -115,6 +115,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --color-black: #000000;
+
+  --animate-meteor: meteor 8s linear infinite;
 }
 
 @layer base {
@@ -122,7 +124,25 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(var(--angle, -215deg)) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle, -215deg)) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+@utility animate-meteor {
+  animation: meteor 8s linear infinite;
 }

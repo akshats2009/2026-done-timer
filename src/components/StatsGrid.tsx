@@ -46,7 +46,7 @@ export function StatsGrid({ data }: StatsGridProps) {
     },
     {
       icon: <TrendingUp className="h-4 w-4" />,
-      label: "Seconds Elapsed",
+      label: "Seconds This Year",
       value: data.secondsElapsed.toLocaleString(),
       sub: "and counting",
       area: "md:[grid-area:3/1/4/7] xl:[grid-area:2/8/3/10]",
@@ -79,30 +79,37 @@ interface StatCardProps {
 
 function StatCard({ icon, label, value, sub, area }: StatCardProps) {
   return (
-    <li className={cn("min-h-[10rem] list-none", area)}>
-      <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+    <li className={cn("min-h-[9rem] list-none", area)}>
+      <div className="relative h-full rounded-lg border border-border/50 p-px">
         <GlowingEffect
           spread={40}
           glow={true}
           disabled={false}
           proximity={64}
           inactiveZone={0.01}
-          borderWidth={3}
+          borderWidth={2}
         />
-        <div className="relative flex h-full flex-col justify-between gap-4 overflow-hidden rounded-xl border-[0.75px] bg-background p-5 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] md:p-6">
-          <div className="relative flex flex-1 flex-col justify-between gap-3">
-            <div className="w-fit rounded-lg border-[0.75px] border-border bg-muted p-2">
+        <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[7px] bg-background/80 backdrop-blur-sm p-5 md:p-6">
+          {/* Subtle corner accent */}
+          <div className="absolute top-0 right-0 h-8 w-8 border-t border-r border-border/30" />
+          <div className="absolute bottom-0 left-0 h-8 w-8 border-b border-l border-border/30" />
+
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded border border-border/60 bg-muted/50 text-muted-foreground">
               {icon}
             </div>
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                {label}
-              </p>
-              <p className="text-2xl font-bold tracking-tight text-foreground md:text-3xl tabular-nums">
-                {value}
-              </p>
-              <p className="text-xs text-muted-foreground">{sub}</p>
-            </div>
+            <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
+              {label}
+            </span>
+          </div>
+
+          <div className="mt-auto pt-3">
+            <p className="font-mono text-2xl font-bold tracking-tight text-foreground md:text-3xl tabular-nums">
+              {value}
+            </p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground/70">
+              {sub}
+            </p>
           </div>
         </div>
       </div>
