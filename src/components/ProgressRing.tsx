@@ -163,9 +163,9 @@ export function ProgressRing({
 
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5">
-        <span className="font-mono text-[3.2rem] font-bold leading-none tracking-tighter bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent sm:text-[3.8rem]">
-          {percentage.toFixed(2)}
-          <span className="text-[1.8rem] sm:text-[2.2rem]">%</span>
+        <span className="text-[3.2rem] font-semibold leading-none tracking-tighter bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent sm:text-[3.8rem]" style={{ fontFamily: "var(--font-mono)" }}>
+          {percentage.toFixed(4)}
+          <span className="text-[1.6rem] sm:text-[2rem]">%</span>
         </span>
         <div className="flex items-center gap-1.5">
           <span className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />

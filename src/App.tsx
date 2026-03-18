@@ -12,7 +12,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { Github } from "lucide-react";
 
 export default function App() {
-  const data = useYearProgress(1000);
+  const data = useYearProgress(100);
 
   useEffect(() => {
     document.title = `${data.percentage.toFixed(1)}% of ${data.year} is done`;
@@ -86,8 +86,8 @@ export default function App() {
         <section className="flex flex-col items-center pt-16 text-center sm:pt-20 lg:pt-24">
           <YearBadge year={data.year} />
 
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            {data.percentage.toFixed(1)}% of{" "}
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            <span className="tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>{data.percentage.toFixed(1)}%</span> of{" "}
             <span className="bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
               {data.year}
             </span>{" "}
@@ -95,7 +95,7 @@ export default function App() {
           </h1>
 
           <p className="mt-3 max-w-md text-sm text-muted-foreground/70 sm:text-base">
-            {data.daysElapsed} days down, {data.daysRemaining} to go.
+            <span className="tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>{data.daysElapsed}</span> days down, <span className="tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>{data.daysRemaining}</span> to go.
           </p>
         </section>
 

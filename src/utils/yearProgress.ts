@@ -1,12 +1,14 @@
 export interface YearProgressData {
   year: number;
   percentage: number;
+  millisecondsElapsed: number;
+  secondsElapsed: number;
+  minutesElapsed: number;
+  hoursElapsed: number;
   daysElapsed: number;
   daysRemaining: number;
   totalDays: number;
-  hoursElapsed: number;
-  minutesElapsed: number;
-  secondsElapsed: number;
+  monthsElapsed: number;
   currentMonth: string;
   currentDay: number;
   isLeapYear: boolean;
@@ -39,20 +41,25 @@ export function getYearProgress(now: Date = new Date()): YearProgressData {
   const daysRemaining = totalDays - daysElapsed;
 
   const totalSecondsElapsed = elapsedMs / 1000;
-  const hoursElapsed = Math.floor(totalSecondsElapsed / 3600);
-  const minutesElapsed = Math.floor(totalSecondsElapsed / 60);
-  const secondsElapsed = Math.floor(totalSecondsElapsed);
+
+  const month = now.getMonth();
+  const dayOfMonth = now.getDate();
+  const daysInCurrentMonth = new Date(year, month + 1, 0).getDate();
+  const monthFraction = (dayOfMonth - 1) / daysInCurrentMonth;
+  const monthsElapsed = month + monthFraction;
 
   return {
     year,
     percentage: Math.min(Math.max(percentage, 0), 100),
+    millisecondsElapsed: Math.floor(elapsedMs),
+    secondsElapsed: Math.floor(totalSecondsElapsed),
+    minutesElapsed: Math.floor(totalSecondsElapsed / 60),
+    hoursElapsed: Math.floor(totalSecondsElapsed / 3600),
     daysElapsed: Math.floor(daysElapsed),
     daysRemaining: Math.ceil(daysRemaining),
     totalDays,
-    hoursElapsed,
-    minutesElapsed,
-    secondsElapsed,
-    currentMonth: MONTH_NAMES[now.getMonth()],
+    monthsElapsed: Math.round(monthsElapsed * 10) / 10,
+    currentMonth: MONTH_NAMES[month],
     currentDay: now.getDate(),
     isLeapYear: isLeapYear(year),
   };

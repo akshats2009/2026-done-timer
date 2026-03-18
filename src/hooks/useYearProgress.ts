@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getYearProgress, type YearProgressData } from "@/utils/yearProgress";
 
-export function useYearProgress(intervalMs = 1000): YearProgressData {
+export function useYearProgress(intervalMs = 100): YearProgressData {
   const [data, setData] = useState<YearProgressData>(() => getYearProgress());
 
   useEffect(() => {

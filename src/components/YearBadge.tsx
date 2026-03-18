@@ -17,7 +17,7 @@ export function YearBadge({ year }: YearBadgeProps) {
       <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500">
         <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-75" />
       </span>
-      <span className="font-mono text-xs font-medium tracking-widest text-muted-foreground">
+      <span className="text-xs font-medium tracking-widest text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
         {year} &middot; LIVE
       </span>
     </div>
