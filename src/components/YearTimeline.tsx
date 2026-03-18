@@ -1,3 +1,5 @@
+import { GlassPanel } from "@/components/ui/glass-panel";
+
 interface YearTimelineProps {
   percentage: number;
   year: number;
@@ -13,18 +15,23 @@ const monoStyle = { fontFamily: "var(--font-mono)" };
 export function YearTimeline({ percentage, year }: YearTimelineProps) {
   return (
     <div className="w-full">
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted/50">
+      {/* Glass track bar */}
+      <GlassPanel intensity="subtle" className="relative h-3 w-full rounded-full">
         <div
-          className="absolute inset-y-0 left-0 rounded-full bg-purple-500 transition-[width] duration-500 ease-out"
+          className="absolute inset-y-0 left-0 rounded-full bg-purple-500/60 transition-[width] duration-500 ease-out"
           style={{ width: `${percentage}%` }}
-        />
+        >
+          <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]" />
+        </div>
+        {/* Needle */}
         <div
-          className="absolute top-1/2 h-4 w-px -translate-y-1/2 bg-foreground/80 transition-[left] duration-500 ease-out"
+          className="absolute top-1/2 h-5 w-px -translate-y-1/2 bg-foreground/70 transition-[left] duration-500 ease-out"
           style={{ left: `${percentage}%` }}
         />
-      </div>
+      </GlassPanel>
 
-      <div className="mt-2.5 flex justify-between px-0.5">
+      {/* Month labels */}
+      <div className="mt-3 flex justify-between px-0.5">
         {MONTHS.map((m, i) => {
           const monthPerc = ((i + 0.5) / 12) * 100;
           const isPast = percentage >= monthPerc;
@@ -33,9 +40,7 @@ export function YearTimeline({ percentage, year }: YearTimelineProps) {
               key={m}
               style={monoStyle}
               className={`text-[9px] tracking-wider transition-colors ${
-                isPast
-                  ? "text-muted-foreground"
-                  : "text-muted-foreground/25"
+                isPast ? "text-muted-foreground" : "text-muted-foreground/25"
               }`}
             >
               {m}
@@ -45,10 +50,16 @@ export function YearTimeline({ percentage, year }: YearTimelineProps) {
       </div>
 
       <div className="mt-1.5 flex justify-between">
-        <span className="text-[10px] text-muted-foreground/35" style={monoStyle}>
+        <span
+          className="text-[10px] text-muted-foreground/35"
+          style={monoStyle}
+        >
           Jan 1, {year}
         </span>
-        <span className="text-[10px] text-muted-foreground/35" style={monoStyle}>
+        <span
+          className="text-[10px] text-muted-foreground/35"
+          style={monoStyle}
+        >
           Dec 31, {year}
         </span>
       </div>
