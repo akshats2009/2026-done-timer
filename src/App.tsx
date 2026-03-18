@@ -6,7 +6,7 @@ import { StatsGrid } from "@/components/StatsGrid";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TopProgressBar } from "@/components/TopProgressBar";
 import { YearTimeline } from "@/components/YearTimeline";
-import { GridPattern } from "@/components/ui/grid-pattern";
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { Meteors } from "@/components/ui/meteors";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Github } from "lucide-react";
@@ -22,15 +22,14 @@ export default function App() {
     <div className="relative min-h-screen overflow-hidden bg-background">
       <TopProgressBar percentage={data.percentage} />
 
-      <GridPattern
-        width={48}
-        height={48}
-        className="fill-muted-foreground/[0.02] stroke-muted-foreground/[0.05] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_30%,black_20%,transparent_80%)]"
-        squares={[
-          [4, 3], [8, 6], [12, 2], [6, 10],
-          [15, 8], [2, 14], [18, 4], [10, 12],
-          [20, 6], [3, 8], [16, 14], [7, 2],
-        ]}
+      {/* Flickering grid background */}
+      <FlickeringGrid
+        className="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(ellipse_80%_70%_at_50%_40%,black_20%,transparent_80%)]"
+        squareSize={4}
+        gridGap={6}
+        color="#a855f7"
+        maxOpacity={0.15}
+        flickerChance={0.08}
       />
 
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
