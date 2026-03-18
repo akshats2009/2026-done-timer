@@ -5,7 +5,7 @@ import { StatsGrid } from "@/components/StatsGrid";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TopProgressBar } from "@/components/TopProgressBar";
 import { YearTimeline } from "@/components/YearTimeline";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
+import AnimatedGradientBackground from "@/components/ui/animated-gradient-background";
 import { Meteors } from "@/components/ui/meteors";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { GlassFilter } from "@/components/ui/glass-filter";
@@ -24,17 +24,27 @@ export default function App() {
       <GlassFilter />
       <TopProgressBar percentage={data.percentage} />
 
-      {/* Flickering grid background */}
-      <FlickeringGrid
-        className="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(ellipse_90%_80%_at_50%_40%,black_30%,transparent_80%)]"
-        squareSize={4}
-        gridGap={6}
-        color="#a855f7"
-        maxOpacity={0.18}
-        flickerChance={0.1}
+      {/* Animated gradient background */}
+      <AnimatedGradientBackground
+        Breathing={true}
+        startingGap={130}
+        breathingRange={8}
+        animationSpeed={0.03}
+        topOffset={10}
+        gradientColors={[
+          "var(--background)",
+          "#2e1065",
+          "#4c1d95",
+          "#6d28d9",
+          "#7c3aed",
+          "#8b5cf6",
+          "#a78bfa",
+        ]}
+        gradientStops={[30, 45, 55, 65, 75, 85, 100]}
+        containerClassName="pointer-events-none -z-10"
       />
 
-      {/* Meteors */}
+      {/* Meteors on top of gradient */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <Meteors
           number={18}
@@ -44,13 +54,6 @@ export default function App() {
           maxDuration={14}
           angle={215}
         />
-      </div>
-
-      {/* Ambient light */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/3 bg-purple-500/[0.04] blur-[120px]" />
-        <div className="absolute bottom-0 right-0 h-[500px] w-[600px] translate-x-1/4 translate-y-1/4 bg-purple-500/[0.03] blur-[100px]" />
-        <div className="absolute top-1/2 left-0 h-[400px] w-[400px] -translate-x-1/3 bg-purple-500/[0.02] blur-[80px]" />
       </div>
 
       {/* Header */}
@@ -91,13 +94,15 @@ export default function App() {
 
       {/* Main */}
       <main className="relative z-10 mx-auto max-w-6xl px-2 sm:px-4">
-        {/* Hero glass card with big percentage */}
+        {/* Hero glass card */}
         <section className="mt-8 sm:mt-12">
-          <GlassPanel intensity="strong" className="rounded-3xl p-8 sm:p-12 lg:p-16">
+          <GlassPanel
+            intensity="strong"
+            className="rounded-3xl p-8 sm:p-12 lg:p-16"
+          >
             <div className="flex flex-col items-center text-center">
               <YearBadge year={data.year} />
 
-              {/* Giant percentage */}
               <div className="mt-8 sm:mt-10">
                 <span
                   className="text-[5rem] font-bold leading-none tracking-tighter text-foreground sm:text-[7rem] lg:text-[9rem]"
@@ -112,11 +117,12 @@ export default function App() {
 
               <p className="mt-2 text-lg text-muted-foreground/60 sm:text-xl">
                 of{" "}
-                <span className="text-purple-400 font-medium">{data.year}</span>{" "}
+                <span className="text-purple-400 font-medium">
+                  {data.year}
+                </span>{" "}
                 is done
               </p>
 
-              {/* Live indicator */}
               <GlassPanel
                 intensity="subtle"
                 className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5"
@@ -132,7 +138,6 @@ export default function App() {
                 </span>
               </GlassPanel>
 
-              {/* Quick stats row */}
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <GlassPanel
                   intensity="subtle"
@@ -195,7 +200,10 @@ export default function App() {
 
         {/* Section divider */}
         <div className="my-10 flex items-center gap-4 sm:my-12">
-          <GlassPanel intensity="subtle" className="h-px flex-1 rounded-full" />
+          <GlassPanel
+            intensity="subtle"
+            className="h-px flex-1 rounded-full"
+          />
           <GlassPanel
             intensity="subtle"
             className="rounded-full px-4 py-1.5"
@@ -204,7 +212,10 @@ export default function App() {
               {data.year} in numbers
             </span>
           </GlassPanel>
-          <GlassPanel intensity="subtle" className="h-px flex-1 rounded-full" />
+          <GlassPanel
+            intensity="subtle"
+            className="h-px flex-1 rounded-full"
+          />
         </div>
 
         {/* Stats grid */}
