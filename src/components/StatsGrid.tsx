@@ -7,6 +7,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { NumberTicker } from "@/components/ui/number-ticker";
 import { cn } from "@/lib/utils";
 import type { YearProgressData } from "@/utils/yearProgress";
 
@@ -19,44 +20,51 @@ export function StatsGrid({ data }: StatsGridProps) {
     {
       icon: <CalendarDays className="h-4 w-4" />,
       label: "Days Elapsed",
-      value: data.daysElapsed.toLocaleString(),
-      sub: `of ${data.totalDays}`,
+      value: data.daysElapsed,
+      sub: `of ${data.totalDays} days`,
       area: "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",
+      color: "from-purple-500 to-indigo-500",
     },
     {
       icon: <Hourglass className="h-4 w-4" />,
-      label: "Days Remaining",
-      value: data.daysRemaining.toLocaleString(),
+      label: "Days Left",
+      value: data.daysRemaining,
       sub: `until ${data.year + 1}`,
       area: "md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]",
+      color: "from-cyan-500 to-blue-500",
     },
     {
       icon: <Clock className="h-4 w-4" />,
-      label: "Hours Elapsed",
-      value: data.hoursElapsed.toLocaleString(),
-      sub: "this year",
+      label: "Hours",
+      value: data.hoursElapsed,
+      sub: "elapsed this year",
       area: "md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]",
+      color: "from-amber-500 to-orange-500",
     },
     {
       icon: <Sunrise className="h-4 w-4" />,
-      label: "Current Date",
-      value: `${data.currentMonth} ${data.currentDay}`,
+      label: "Today",
+      value: data.currentDay,
+      displayText: `${data.currentMonth} ${data.currentDay}`,
       sub: data.isLeapYear ? "Leap year" : "Common year",
       area: "md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]",
+      color: "from-emerald-500 to-teal-500",
     },
     {
       icon: <TrendingUp className="h-4 w-4" />,
-      label: "Seconds This Year",
-      value: data.secondsElapsed.toLocaleString(),
-      sub: "and counting",
+      label: "Seconds",
+      value: data.secondsElapsed,
+      sub: "ticking every moment",
       area: "md:[grid-area:3/1/4/7] xl:[grid-area:2/8/3/10]",
+      color: "from-rose-500 to-pink-500",
     },
     {
       icon: <Timer className="h-4 w-4" />,
-      label: "Minutes Elapsed",
-      value: data.minutesElapsed.toLocaleString(),
-      sub: "this year",
+      label: "Minutes",
+      value: data.minutesElapsed,
+      sub: "elapsed this year",
       area: "md:[grid-area:3/7/4/13] xl:[grid-area:2/10/3/13]",
+      color: "from-violet-500 to-purple-500",
     },
   ];
 
@@ -72,15 +80,17 @@ export function StatsGrid({ data }: StatsGridProps) {
 interface StatCardProps {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: number;
+  displayText?: string;
   sub: string;
   area: string;
+  color: string;
 }
 
-function StatCard({ icon, label, value, sub, area }: StatCardProps) {
+function StatCard({ icon, label, value, displayText, sub, area, color }: StatCardProps) {
   return (
     <li className={cn("min-h-[9rem] list-none", area)}>
-      <div className="relative h-full rounded-lg border border-border/50 p-px">
+      <div className="group relative h-full rounded-lg border border-border/40 p-px transition-colors hover:border-border/70">
         <GlowingEffect
           spread={40}
           glow={true}
@@ -90,12 +100,11 @@ function StatCard({ icon, label, value, sub, area }: StatCardProps) {
           borderWidth={2}
         />
         <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[7px] bg-background/80 backdrop-blur-sm p-5 md:p-6">
-          {/* Subtle corner accent */}
-          <div className="absolute top-0 right-0 h-8 w-8 border-t border-r border-border/30" />
-          <div className="absolute bottom-0 left-0 h-8 w-8 border-b border-l border-border/30" />
+          {/* Top gradient line */}
+          <div className={cn("absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-0 transition-opacity group-hover:opacity-100", color)} />
 
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded border border-border/60 bg-muted/50 text-muted-foreground">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded border border-border/50 text-muted-foreground">
               {icon}
             </div>
             <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
@@ -104,10 +113,17 @@ function StatCard({ icon, label, value, sub, area }: StatCardProps) {
           </div>
 
           <div className="mt-auto pt-3">
-            <p className="font-mono text-2xl font-bold tracking-tight text-foreground md:text-3xl tabular-nums">
-              {value}
-            </p>
-            <p className="mt-0.5 text-[11px] text-muted-foreground/70">
+            {displayText ? (
+              <p className="font-mono text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+                {displayText}
+              </p>
+            ) : (
+              <NumberTicker
+                value={value}
+                className="font-mono text-2xl font-bold tracking-tight text-foreground md:text-3xl"
+              />
+            )}
+            <p className="mt-1 text-[11px] text-muted-foreground/60">
               {sub}
             </p>
           </div>
