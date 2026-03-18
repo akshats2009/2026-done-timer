@@ -20,10 +20,8 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
-      {/* Top progress bar — always visible */}
       <TopProgressBar percentage={data.percentage} />
 
-      {/* Grid pattern background */}
       <GridPattern
         width={48}
         height={48}
@@ -35,7 +33,6 @@ export default function App() {
         ]}
       />
 
-      {/* Meteor shower */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <Meteors
           number={18}
@@ -47,10 +44,9 @@ export default function App() {
         />
       </div>
 
-      {/* Ambient light */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/3 bg-purple-500/[0.03] blur-[100px]" />
-        <div className="absolute bottom-0 right-0 h-[400px] w-[500px] translate-x-1/4 translate-y-1/4 bg-cyan-500/[0.03] blur-[80px]" />
+        <div className="absolute bottom-0 right-0 h-[400px] w-[500px] translate-x-1/4 translate-y-1/4 bg-purple-500/[0.02] blur-[80px]" />
       </div>
 
       {/* Header */}
@@ -58,7 +54,7 @@ export default function App() {
         <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-2.5">
             <div className="flex h-6 w-6 items-center justify-center rounded border border-border/40">
-              <div className="h-2 w-2 rounded-sm bg-gradient-to-br from-purple-500 to-cyan-500" />
+              <div className="h-2 w-2 rounded-sm bg-purple-500" />
             </div>
             <span className="text-xs font-medium tracking-[0.1em] uppercase text-muted-foreground/80">
               {data.year} Timer
@@ -82,13 +78,12 @@ export default function App() {
 
       {/* Main content */}
       <main className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Hero section */}
         <section className="flex flex-col items-center pt-16 text-center sm:pt-20 lg:pt-24">
           <YearBadge year={data.year} />
 
           <h1 className="mt-6 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             <span className="tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>{data.percentage.toFixed(1)}%</span> of{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="text-purple-400">
               {data.year}
             </span>{" "}
             is done
@@ -99,39 +94,35 @@ export default function App() {
           </p>
         </section>
 
-        {/* Progress ring */}
         <section className="mt-12 flex justify-center sm:mt-16">
           <ProgressRing percentage={data.percentage} />
         </section>
 
-        {/* Year timeline bar */}
         <section className="mx-auto mt-14 max-w-2xl sm:mt-16">
           <div className="relative rounded-lg border border-border/30 bg-background/60 p-5 backdrop-blur-sm sm:p-6">
             <BorderBeam
               size={60}
               duration={10}
               colorFrom="#a855f7"
-              colorTo="#06b6d4"
+              colorTo="#a855f7"
               borderWidth={1}
             />
             <YearTimeline percentage={data.percentage} year={data.year} />
           </div>
         </section>
 
-        {/* Stats grid */}
         <section className="mt-16 pb-20 sm:mt-20 sm:pb-24">
           <div className="mb-6 flex items-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+            <div className="h-px flex-1 bg-border/40" />
             <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground/50">
               {data.year} in numbers
             </span>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+            <div className="h-px flex-1 bg-border/40" />
           </div>
           <StatsGrid data={data} />
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="relative z-10 border-t border-border/20">
         <div className="mx-auto flex h-12 max-w-6xl items-center justify-center gap-4 px-4 sm:px-6">
           <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">

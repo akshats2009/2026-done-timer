@@ -13,10 +13,9 @@ const monoStyle = { fontFamily: "var(--font-mono)" };
 export function YearTimeline({ percentage, year }: YearTimelineProps) {
   return (
     <div className="w-full">
-      {/* Bar */}
       <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted/50">
         <div
-          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-500 transition-[width] duration-500 ease-out"
+          className="absolute inset-y-0 left-0 rounded-full bg-purple-500 transition-[width] duration-500 ease-out"
           style={{ width: `${percentage}%` }}
         />
         <div
@@ -25,7 +24,6 @@ export function YearTimeline({ percentage, year }: YearTimelineProps) {
         />
       </div>
 
-      {/* Month labels */}
       <div className="mt-2.5 flex justify-between px-0.5">
         {MONTHS.map((m, i) => {
           const monthPerc = ((i + 0.5) / 12) * 100;
@@ -46,7 +44,6 @@ export function YearTimeline({ percentage, year }: YearTimelineProps) {
         })}
       </div>
 
-      {/* Year range */}
       <div className="mt-1.5 flex justify-between">
         <span className="text-[10px] text-muted-foreground/35" style={monoStyle}>
           Jan 1, {year}

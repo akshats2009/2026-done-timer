@@ -22,7 +22,6 @@ export function StatsGrid({ data }: StatsGridProps) {
       value: data.millisecondsElapsed.toLocaleString(),
       sub: "since Jan 1",
       area: "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",
-      color: "from-rose-500 to-pink-500",
     },
     {
       icon: <Gauge className="h-4 w-4" />,
@@ -30,7 +29,6 @@ export function StatsGrid({ data }: StatsGridProps) {
       value: data.secondsElapsed.toLocaleString(),
       sub: `${(data.secondsElapsed % 60).toLocaleString()}s into this minute`,
       area: "md:[grid-area:1/7/2/13] xl:[grid-area:1/5/2/9]",
-      color: "from-orange-500 to-amber-500",
     },
     {
       icon: <Timer className="h-4 w-4" />,
@@ -38,7 +36,6 @@ export function StatsGrid({ data }: StatsGridProps) {
       value: data.minutesElapsed.toLocaleString(),
       sub: `${Math.floor(data.minutesElapsed / 60 % 24)}h ${data.minutesElapsed % 60}m today`,
       area: "md:[grid-area:2/1/3/7] xl:[grid-area:1/9/2/13]",
-      color: "from-amber-500 to-yellow-500",
     },
     {
       icon: <Clock className="h-4 w-4" />,
@@ -46,7 +43,6 @@ export function StatsGrid({ data }: StatsGridProps) {
       value: data.hoursElapsed.toLocaleString(),
       sub: `${(data.hoursElapsed % 24).toLocaleString()}h into today`,
       area: "md:[grid-area:2/7/3/13] xl:[grid-area:2/1/3/5]",
-      color: "from-cyan-500 to-blue-500",
     },
     {
       icon: <CalendarDays className="h-4 w-4" />,
@@ -54,7 +50,6 @@ export function StatsGrid({ data }: StatsGridProps) {
       value: data.daysElapsed.toLocaleString(),
       sub: `${data.daysRemaining} remaining`,
       area: "md:[grid-area:3/1/4/7] xl:[grid-area:2/5/3/9]",
-      color: "from-indigo-500 to-purple-500",
     },
     {
       icon: <Hourglass className="h-4 w-4" />,
@@ -62,7 +57,6 @@ export function StatsGrid({ data }: StatsGridProps) {
       value: data.monthsElapsed.toFixed(1),
       sub: `${data.currentMonth} ${data.currentDay} · ${data.isLeapYear ? "Leap year" : "Common year"}`,
       area: "md:[grid-area:3/7/4/13] xl:[grid-area:2/9/3/13]",
-      color: "from-purple-500 to-violet-500",
     },
   ];
 
@@ -81,10 +75,9 @@ interface StatCardProps {
   value: string;
   sub: string;
   area: string;
-  color: string;
 }
 
-function StatCard({ icon, label, value, sub, area, color }: StatCardProps) {
+function StatCard({ icon, label, value, sub, area }: StatCardProps) {
   return (
     <li className={cn("min-h-[9rem] list-none", area)}>
       <div className="group relative h-full rounded-lg border border-border/40 p-px transition-colors hover:border-border/70">
@@ -97,7 +90,7 @@ function StatCard({ icon, label, value, sub, area, color }: StatCardProps) {
           borderWidth={2}
         />
         <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[7px] bg-background/80 backdrop-blur-sm p-5 md:p-6">
-          <div className={cn("absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-0 transition-opacity group-hover:opacity-100", color)} />
+          <div className="absolute inset-x-0 top-0 h-px bg-purple-500 opacity-0 transition-opacity group-hover:opacity-100" />
 
           <div className="flex items-center gap-2.5">
             <div className="flex h-7 w-7 items-center justify-center rounded border border-border/50 text-muted-foreground">

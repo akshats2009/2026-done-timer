@@ -11,7 +11,7 @@ export function YearBadge({ year }: YearBadgeProps) {
         size={30}
         duration={4}
         colorFrom="#a855f7"
-        colorTo="#06b6d4"
+        colorTo="#a855f7"
         borderWidth={1}
       />
       <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500">
