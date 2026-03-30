@@ -1,15 +1,14 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
-import { LiquidButton } from "@/components/ui/liquid-glass-button";
 
 export function ThemeToggle() {
   const { theme, toggle } = useTheme();
 
   return (
-    <LiquidButton
+    <button
+      type="button"
       onClick={toggle}
-      size="icon"
-      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-foreground/20 bg-background text-foreground"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (
@@ -17,6 +16,6 @@ export function ThemeToggle() {
       ) : (
         <Moon className="h-3.5 w-3.5" />
       )}
-    </LiquidButton>
+    </button>
   );
 }

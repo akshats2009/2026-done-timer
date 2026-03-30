@@ -1,246 +1,174 @@
-import { useEffect } from "react";
-import { useYearProgress } from "@/hooks/useYearProgress";
-import { YearBadge } from "@/components/YearBadge";
-import { StatsGrid } from "@/components/StatsGrid";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { TopProgressBar } from "@/components/TopProgressBar";
-import { YearTimeline } from "@/components/YearTimeline";
-import AnimatedGradientBackground from "@/components/ui/animated-gradient-background";
-import { Meteors } from "@/components/ui/meteors";
-import { GlassPanel } from "@/components/ui/glass-panel";
-import { GlassFilter } from "@/components/ui/glass-filter";
-import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { Github } from "lucide-react";
+import { ArrowDown, Github, Mail } from "lucide-react";
 
 export default function App() {
-  const data = useYearProgress(100);
-
-  useEffect(() => {
-    document.title = `${data.percentage.toFixed(1)}% of ${data.year} is done`;
-  }, [data.percentage, data.year]);
+  const scrollToContent = () => {
+    const target = document.getElementById("about");
+    if (!target) return;
+    target.scrollIntoView({ behavior: "auto", block: "start" });
+  };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      <GlassFilter />
-      <TopProgressBar percentage={data.percentage} />
-
-      {/* Animated gradient background */}
-      <AnimatedGradientBackground
-        Breathing={true}
-        startingGap={130}
-        breathingRange={8}
-        animationSpeed={0.03}
-        topOffset={10}
-        gradientColors={[
-          "var(--background)",
-          "#2e1065",
-          "#4c1d95",
-          "#6d28d9",
-          "#7c3aed",
-          "#8b5cf6",
-          "#a78bfa",
-        ]}
-        gradientStops={[30, 45, 55, 65, 75, 85, 100]}
-        containerClassName="pointer-events-none -z-10"
-      />
-
-      {/* Meteors on top of gradient */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <Meteors
-          number={18}
-          minDelay={0.8}
-          maxDelay={4}
-          minDuration={5}
-          maxDuration={14}
-          angle={215}
-        />
-      </div>
-
-      {/* Header */}
-      <header className="sticky top-1 z-50 px-2 sm:px-4">
-        <GlassPanel intensity="subtle" className="rounded-2xl">
-          <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
-            <div className="flex items-center gap-2.5">
-              <GlassPanel
-                intensity="subtle"
-                className="flex h-6 w-6 items-center justify-center rounded-lg"
-              >
-                <div className="h-2 w-2 rounded-sm bg-purple-500" />
-              </GlassPanel>
-              <span className="text-xs font-medium tracking-[0.1em] uppercase text-muted-foreground/80">
-                {data.year} Timer
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <LiquidButton
-                size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                onClick={() =>
-                  window.open(
-                    "https://github.com/akshats2009/2026-done-timer",
-                    "_blank"
-                  )
-                }
-                aria-label="View on GitHub"
-              >
-                <Github className="h-3.5 w-3.5" />
-              </LiquidButton>
-              <ThemeToggle />
-            </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-foreground/10 bg-background/90 backdrop-blur-sm">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+          <p className="text-sm font-semibold tracking-[0.14em] uppercase">
+            Site Presentation
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                window.open(
+                  "https://github.com/akshats2009/2026-done-timer",
+                  "_blank"
+                )
+              }
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-foreground/20 bg-background text-foreground"
+              aria-label="View on GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </button>
+            <ThemeToggle />
           </div>
-        </GlassPanel>
+        </div>
       </header>
 
-      {/* Main */}
-      <main className="relative z-10 mx-auto max-w-6xl px-2 sm:px-4">
-        {/* Hero glass card */}
-        <section className="mt-8 sm:mt-12">
-          <GlassPanel
-            intensity="strong"
-            className="rounded-3xl p-8 sm:p-12 lg:p-16"
-          >
-            <div className="flex flex-col items-center text-center">
-              <YearBadge year={data.year} />
-
-              <div className="mt-8 sm:mt-10">
-                <span
-                  className="text-[5rem] font-bold leading-none tracking-tighter text-foreground sm:text-[7rem] lg:text-[9rem]"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {data.percentage.toFixed(2)}
-                  <span className="text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem] text-muted-foreground/50">
-                    %
-                  </span>
-                </span>
-              </div>
-
-              <p className="mt-2 text-lg text-muted-foreground/60 sm:text-xl">
-                of{" "}
-                <span className="text-purple-400 font-medium">
-                  {data.year}
-                </span>{" "}
-                is done
+      <main>
+        <section className="relative h-screen w-full">
+          <img
+            src="/hero-photo.svg"
+            alt="Hero"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/35 dark:bg-black/45" />
+          <div className="relative z-10 mx-auto flex h-full max-w-6xl items-center px-6 pt-14">
+            <div className="max-w-2xl text-white">
+              <h1 className="text-4xl font-bold sm:text-6xl">
+                Building research and outreach for a better future.
+              </h1>
+              <p className="mt-5 text-base text-white/90 sm:text-lg">
+                Explore our team, publications, and initiatives in one place.
               </p>
-
-              <GlassPanel
-                intensity="subtle"
-                className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5"
-              >
-                <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500">
-                  <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-75" />
-                </span>
-                <span
-                  className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground/60"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  updating live
-                </span>
-              </GlassPanel>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-                <GlassPanel
-                  intensity="subtle"
-                  className="flex items-center gap-2 rounded-xl px-4 py-2.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-500" />
-                  <span
-                    className="text-sm font-medium text-foreground tabular-nums"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {data.daysElapsed}
-                  </span>
-                  <span className="text-xs text-muted-foreground/50">
-                    days elapsed
-                  </span>
-                </GlassPanel>
-
-                <GlassPanel
-                  intensity="subtle"
-                  className="flex items-center gap-2 rounded-xl px-4 py-2.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-400/60" />
-                  <span
-                    className="text-sm font-medium text-foreground tabular-nums"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {data.daysRemaining}
-                  </span>
-                  <span className="text-xs text-muted-foreground/50">
-                    remaining
-                  </span>
-                </GlassPanel>
-
-                <GlassPanel
-                  intensity="subtle"
-                  className="flex items-center gap-2 rounded-xl px-4 py-2.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-300/40" />
-                  <span
-                    className="text-sm font-medium text-foreground tabular-nums"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {data.monthsElapsed.toFixed(1)}
-                  </span>
-                  <span className="text-xs text-muted-foreground/50">
-                    months in
-                  </span>
-                </GlassPanel>
-              </div>
             </div>
-          </GlassPanel>
-        </section>
-
-        {/* Year timeline */}
-        <section className="mt-6 sm:mt-8">
-          <GlassPanel intensity="medium" className="rounded-2xl p-5 sm:p-6">
-            <YearTimeline percentage={data.percentage} year={data.year} />
-          </GlassPanel>
-        </section>
-
-        {/* Section divider */}
-        <div className="my-10 flex items-center gap-4 sm:my-12">
-          <GlassPanel
-            intensity="subtle"
-            className="h-px flex-1 rounded-full"
-          />
-          <GlassPanel
-            intensity="subtle"
-            className="rounded-full px-4 py-1.5"
+          </div>
+          <button
+            type="button"
+            onClick={scrollToContent}
+            className="absolute right-6 bottom-6 z-20 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/40 bg-black/30 text-white"
+            aria-label="Scroll down"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground/40">
-              {data.year} in numbers
-            </span>
-          </GlassPanel>
-          <GlassPanel
-            intensity="subtle"
-            className="h-px flex-1 rounded-full"
-          />
-        </div>
+            <ArrowDown className="h-5 w-5" />
+          </button>
+        </section>
 
-        {/* Stats grid */}
-        <section className="pb-8 sm:pb-12">
-          <StatsGrid data={data} />
+        <section id="about" className="mx-auto max-w-6xl px-6 py-16">
+          <h2 className="text-3xl font-semibold">About</h2>
+          <p className="mt-4 max-w-3xl text-muted-foreground">
+            Our work connects people, research, and practical outcomes across
+            disciplines. This site is optimized for clean light and dark mode
+            presentation with no heavy animation overhead.
+          </p>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <h2 className="text-3xl font-semibold">Publications</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Article</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Featured writing and thought pieces.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Research</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Ongoing and completed research outputs.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Journals</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Journal publications and references.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-6 pb-20">
+          <h2 className="text-3xl font-semibold">Our team</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Aarav Mehta</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Program lead
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Coordinates strategy and execution across initiatives.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Nisha Verma</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Research coordinator
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Leads study planning and publication workflows.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Rahul Iyer</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Communications lead
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Manages content, messaging, and external channels.
+              </p>
+            </article>
+          </div>
+
+          <div className="mt-4">
+            <article className="rounded-2xl border border-foreground/15 bg-background p-5">
+              <h3 className="text-xl font-semibold">Vikram Sakthi Mandan</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Outreach director
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                bio coming soon
+              </p>
+            </article>
+          </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="relative z-10 px-2 pb-2 sm:px-4 sm:pb-3">
-        <GlassPanel intensity="subtle" className="rounded-2xl">
-          <div className="mx-auto flex h-12 max-w-6xl items-center justify-center gap-4 px-4 sm:px-6">
-            <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">
-              React + TypeScript
-            </span>
-            <span className="text-muted-foreground/15">&middot;</span>
-            <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">
-              Updates every second
-            </span>
-            <span className="text-muted-foreground/15">&middot;</span>
-            <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">
-              Auto-adjusts yearly
-            </span>
+      <footer className="border-t border-foreground/10 px-6 py-8">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">
+            &copy; Site Presentation
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                window.open(
+                  "https://github.com/akshats2009/2026-done-timer",
+                  "_blank"
+                )
+              }
+              className="inline-flex h-10 items-center gap-2 rounded-xl border border-foreground/20 bg-background px-4 text-sm font-medium text-foreground"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </button>
+            <button
+              type="button"
+              className="inline-flex h-10 items-center gap-2 rounded-xl border border-foreground/20 bg-background px-4 text-sm font-medium text-foreground"
+            >
+              <Mail className="h-4 w-4" />
+              Contact
+            </button>
           </div>
-        </GlassPanel>
+        </div>
       </footer>
     </div>
   );

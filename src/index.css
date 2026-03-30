@@ -128,12 +128,20 @@
   * {
     @apply border-border;
   }
+  html {
+    @apply bg-background;
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+  }
+  #root {
+    min-height: 100vh;
+    background: var(--background);
   }
 }
 
