@@ -80,15 +80,12 @@ interface StatCardProps {
 function StatCard({ icon, label, value, sub, area }: StatCardProps) {
   return (
     <li className={cn("min-h-[9rem] list-none", area)}>
-      <GlassPanel
-        intensity="medium"
-        className="group h-full transition-transform duration-300 hover:scale-[1.02]"
-      >
+      <GlassPanel intensity="medium" className="h-full rounded-lg">
         <div className="relative flex h-full flex-col justify-between p-5 md:p-6">
           <div className="flex items-center gap-2.5">
             <GlassPanel
               intensity="subtle"
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground"
             >
               {icon}
             </GlassPanel>
