@@ -6,9 +6,6 @@ interface ProgressRingProps {
   strokeWidth?: number;
 }
 
-const ACCENT = "#a855f7";
-const ACCENT_GLOW = "rgba(168, 85, 247, 0.35)";
-
 export function ProgressRing({
   percentage,
   size = 300,
@@ -48,16 +45,14 @@ export function ProgressRing({
 
   return (
     <div className="relative inline-flex items-center justify-center">
-      {/* Outer glass ring */}
       <div
-        className="absolute -inset-6 rounded-full
+        className="absolute -inset-6 rounded-lg
           shadow-[0_0_6px_rgba(0,0,0,0.02),inset_2px_2px_0.5px_-2px_rgba(0,0,0,0.5),inset_-2px_-2px_0.5px_-2px_rgba(0,0,0,0.45),inset_0_0_4px_4px_rgba(0,0,0,0.06)]
           dark:shadow-[0_0_6px_rgba(0,0,0,0.02),inset_2px_2px_0.5px_-2.5px_rgba(255,255,255,0.05),inset_-2px_-2px_0.5px_-2.5px_rgba(255,255,255,0.5),inset_0_0_4px_4px_rgba(255,255,255,0.06)]"
       />
 
-      {/* Inner glass ring */}
       <div
-        className="absolute -inset-3 rounded-full
+        className="absolute -inset-3 rounded-lg
           shadow-[inset_1px_1px_0.5px_-1px_rgba(0,0,0,0.3),inset_-1px_-1px_0.5px_-1px_rgba(0,0,0,0.25)]
           dark:shadow-[inset_1px_1px_0.5px_-1px_rgba(255,255,255,0.03),inset_-1px_-1px_0.5px_-1px_rgba(255,255,255,0.03)]"
       />
@@ -96,14 +91,14 @@ export function ProgressRing({
           cy={center}
           r={radius}
           fill="none"
-          stroke={ACCENT_GLOW}
+          stroke="currentColor"
           strokeWidth={strokeWidth + 8}
           strokeLinecap="butt"
           strokeDasharray={circumference}
           strokeDashoffset={
             circumference - (percentage / 100) * circumference
           }
-          className="blur-[6px] opacity-60"
+          className="text-foreground/20 opacity-60"
         />
 
         <circle
@@ -112,20 +107,20 @@ export function ProgressRing({
           cy={center}
           r={radius}
           fill="none"
-          stroke={ACCENT}
+          stroke="currentColor"
           strokeWidth={strokeWidth}
           strokeLinecap="butt"
           strokeDasharray={circumference}
           strokeDashoffset={circumference}
-          className="transition-[stroke-dashoffset] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="text-foreground/60"
         />
 
         <circle
           cx={dotX}
           cy={dotY}
           r={3}
-          fill={ACCENT}
-          className="transition-all duration-700"
+          fill="currentColor"
+          className="text-foreground/60"
           style={{
             transform: "rotate(90deg)",
             transformOrigin: `${center}px ${center}px`,
@@ -144,7 +139,7 @@ export function ProgressRing({
           </span>
         </span>
         <div className="flex items-center gap-1.5">
-          <span className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="h-1 w-1 rounded-full bg-emerald-500" />
           <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground/70">
             live
           </span>

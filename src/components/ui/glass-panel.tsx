@@ -32,7 +32,7 @@ export function GlassPanel({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl",
+        "relative overflow-hidden rounded-lg",
         shadows[0],
         shadows[1],
         className
