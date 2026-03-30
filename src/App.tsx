@@ -1,16 +1,27 @@
 import { useEffect } from "react";
+import { ArrowDownRight, ArrowUpRight, Github, Mail } from "lucide-react";
 import { useYearProgress } from "@/hooks/useYearProgress";
-import { YearBadge } from "@/components/YearBadge";
 import { StatsGrid } from "@/components/StatsGrid";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TopProgressBar } from "@/components/TopProgressBar";
 import { YearTimeline } from "@/components/YearTimeline";
-import AnimatedGradientBackground from "@/components/ui/animated-gradient-background";
-import { Meteors } from "@/components/ui/meteors";
 import { GlassPanel } from "@/components/ui/glass-panel";
-import { GlassFilter } from "@/components/ui/glass-filter";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { Github } from "lucide-react";
+
+const PUBLICATION_HEADINGS = [
+  {
+    title: "Article",
+    description: "Short-form thought leadership and perspective pieces.",
+  },
+  {
+    title: "Research",
+    description: "Data-backed studies, findings, and long-form analysis.",
+  },
+  {
+    title: "Journals",
+    description: "Periodic updates and documented progress over time.",
+  },
+];
 
 export default function App() {
   const data = useYearProgress(100);
@@ -19,228 +30,189 @@ export default function App() {
     document.title = `${data.percentage.toFixed(1)}% of ${data.year} is done`;
   }, [data.percentage, data.year]);
 
+  const scrollToContent = () => {
+    document.getElementById("site-content")?.scrollIntoView({ behavior: "auto" });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      <GlassFilter />
+    <div className="min-h-screen bg-background text-foreground">
       <TopProgressBar percentage={data.percentage} />
 
-      {/* Animated gradient background */}
-      <AnimatedGradientBackground
-        Breathing={true}
-        startingGap={130}
-        breathingRange={8}
-        animationSpeed={0.03}
-        topOffset={10}
-        gradientColors={[
-          "var(--background)",
-          "#2e1065",
-          "#4c1d95",
-          "#6d28d9",
-          "#7c3aed",
-          "#8b5cf6",
-          "#a78bfa",
-        ]}
-        gradientStops={[30, 45, 55, 65, 75, 85, 100]}
-        containerClassName="pointer-events-none -z-10"
-      />
-
-      {/* Meteors on top of gradient */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <Meteors
-          number={18}
-          minDelay={0.8}
-          maxDelay={4}
-          minDuration={5}
-          maxDuration={14}
-          angle={215}
-        />
-      </div>
-
       {/* Header */}
-      <header className="sticky top-1 z-50 px-2 sm:px-4">
-        <GlassPanel intensity="subtle" className="rounded-2xl">
-          <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
-            <div className="flex items-center gap-2.5">
-              <GlassPanel
-                intensity="subtle"
-                className="flex h-6 w-6 items-center justify-center rounded-lg"
-              >
-                <div className="h-2 w-2 rounded-sm bg-purple-500" />
-              </GlassPanel>
-              <span className="text-xs font-medium tracking-[0.1em] uppercase text-muted-foreground/80">
-                {data.year} Timer
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <LiquidButton
-                size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                onClick={() =>
-                  window.open(
-                    "https://github.com/akshats2009/2026-done-timer",
-                    "_blank"
-                  )
-                }
-                aria-label="View on GitHub"
-              >
-                <Github className="h-3.5 w-3.5" />
-              </LiquidButton>
-              <ThemeToggle />
-            </div>
+      <header className="absolute top-0 right-0 left-0 z-50 px-2 py-2 sm:px-4">
+        <div className="mx-auto flex h-12 max-w-6xl items-center justify-between rounded-xl border border-black/10 bg-background/90 px-2 backdrop-blur-sm dark:border-white/15 sm:px-4">
+          <div className="flex items-center gap-2.5">
+            <GlassPanel
+              intensity="subtle"
+              className="flex h-7 w-7 items-center justify-center rounded-lg"
+            >
+              <div className="h-2 w-2 rounded-sm bg-foreground/80" />
+            </GlassPanel>
+            <span className="text-xs font-medium tracking-[0.1em] uppercase text-muted-foreground/90">
+              {data.year} Timer
+            </span>
           </div>
-        </GlassPanel>
+
+          <div className="flex items-center gap-2">
+            <LiquidButton
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={() =>
+                window.open(
+                  "https://github.com/akshats2009/2026-done-timer",
+                  "_blank"
+                )
+              }
+              aria-label="View on GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </LiquidButton>
+            <ThemeToggle />
+          </div>
+        </div>
       </header>
 
-      {/* Main */}
-      <main className="relative z-10 mx-auto max-w-6xl px-2 sm:px-4">
-        {/* Hero glass card */}
-        <section className="mt-8 sm:mt-12">
-          <GlassPanel
-            intensity="strong"
-            className="rounded-3xl p-8 sm:p-12 lg:p-16"
-          >
-            <div className="flex flex-col items-center text-center">
-              <YearBadge year={data.year} />
+      {/* Hero */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <img
+          src="/hero-image.svg"
+          alt="Hero background"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-white/60 dark:bg-black/55" />
 
-              <div className="mt-8 sm:mt-10">
-                <span
-                  className="text-[5rem] font-bold leading-none tracking-tighter text-foreground sm:text-[7rem] lg:text-[9rem]"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {data.percentage.toFixed(2)}
-                  <span className="text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem] text-muted-foreground/50">
-                    %
-                  </span>
-                </span>
-              </div>
-
-              <p className="mt-2 text-lg text-muted-foreground/60 sm:text-xl">
-                of{" "}
-                <span className="text-purple-400 font-medium">
-                  {data.year}
-                </span>{" "}
-                is done
-              </p>
-
-              <GlassPanel
-                intensity="subtle"
-                className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5"
-              >
-                <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500">
-                  <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-75" />
-                </span>
-                <span
-                  className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground/60"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  updating live
-                </span>
+        <div className="relative mx-auto flex h-full max-w-6xl items-center px-4 pt-24 pb-12 sm:px-6">
+          <GlassPanel intensity="strong" className="w-full max-w-3xl rounded-2xl p-8 sm:p-10">
+            <p className="text-xs font-medium tracking-[0.18em] uppercase text-muted-foreground">
+              Hero Section
+            </p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              {data.year} Progress, built for clarity.
+            </h1>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+              Live yearly tracking with cleaner visuals, stronger contrast in light
+              mode, and simple navigation sections for content and team updates.
+            </p>
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <GlassPanel intensity="subtle" className="rounded-xl p-4">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Progress</p>
+                <p className="mt-2 text-2xl font-semibold tabular-nums">
+                  {data.percentage.toFixed(2)}%
+                </p>
               </GlassPanel>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-                <GlassPanel
-                  intensity="subtle"
-                  className="flex items-center gap-2 rounded-xl px-4 py-2.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-500" />
-                  <span
-                    className="text-sm font-medium text-foreground tabular-nums"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {data.daysElapsed}
-                  </span>
-                  <span className="text-xs text-muted-foreground/50">
-                    days elapsed
-                  </span>
-                </GlassPanel>
-
-                <GlassPanel
-                  intensity="subtle"
-                  className="flex items-center gap-2 rounded-xl px-4 py-2.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-400/60" />
-                  <span
-                    className="text-sm font-medium text-foreground tabular-nums"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {data.daysRemaining}
-                  </span>
-                  <span className="text-xs text-muted-foreground/50">
-                    remaining
-                  </span>
-                </GlassPanel>
-
-                <GlassPanel
-                  intensity="subtle"
-                  className="flex items-center gap-2 rounded-xl px-4 py-2.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-300/40" />
-                  <span
-                    className="text-sm font-medium text-foreground tabular-nums"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {data.monthsElapsed.toFixed(1)}
-                  </span>
-                  <span className="text-xs text-muted-foreground/50">
-                    months in
-                  </span>
-                </GlassPanel>
-              </div>
+              <GlassPanel intensity="subtle" className="rounded-xl p-4">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Days elapsed</p>
+                <p className="mt-2 text-2xl font-semibold tabular-nums">{data.daysElapsed}</p>
+              </GlassPanel>
+              <GlassPanel intensity="subtle" className="rounded-xl p-4">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Days remaining
+                </p>
+                <p className="mt-2 text-2xl font-semibold tabular-nums">{data.daysRemaining}</p>
+              </GlassPanel>
             </div>
           </GlassPanel>
+        </div>
+
+        <LiquidButton
+          size="icon"
+          onClick={scrollToContent}
+          className="absolute right-6 bottom-6 z-20 h-12 w-12 rounded-lg bg-black text-white dark:bg-white dark:text-black"
+          aria-label="Scroll to content"
+        >
+          <ArrowDownRight className="h-4 w-4" />
+        </LiquidButton>
+      </section>
+
+      {/* Main */}
+      <main id="site-content" className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        {/* Publications */}
+        <section id="publications" className="mb-10 sm:mb-12">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Publications</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Article, Research, Journals</p>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {PUBLICATION_HEADINGS.map((item) => (
+              <GlassPanel key={item.title} intensity="medium" className="rounded-xl p-5">
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+              </GlassPanel>
+            ))}
+          </div>
         </section>
 
-        {/* Year timeline */}
-        <section className="mt-6 sm:mt-8">
-          <GlassPanel intensity="medium" className="rounded-2xl p-5 sm:p-6">
+        {/* Timeline */}
+        <section className="mb-10 sm:mb-12">
+          <GlassPanel
+            intensity="medium"
+            className="rounded-2xl p-5 sm:p-6"
+          >
             <YearTimeline percentage={data.percentage} year={data.year} />
           </GlassPanel>
         </section>
 
-        {/* Section divider */}
-        <div className="my-10 flex items-center gap-4 sm:my-12">
-          <GlassPanel
-            intensity="subtle"
-            className="h-px flex-1 rounded-full"
-          />
-          <GlassPanel
-            intensity="subtle"
-            className="rounded-full px-4 py-1.5"
-          >
-            <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-muted-foreground/40">
-              {data.year} in numbers
-            </span>
-          </GlassPanel>
-          <GlassPanel
-            intensity="subtle"
-            className="h-px flex-1 rounded-full"
-          />
-        </div>
-
         {/* Stats grid */}
-        <section className="pb-8 sm:pb-12">
+        <section className="mb-10 sm:mb-12">
+          <h2 className="mb-5 text-2xl font-semibold tracking-tight sm:text-3xl">
+            {data.year} in numbers
+          </h2>
           <StatsGrid data={data} />
+        </section>
+
+        {/* Team */}
+        <section id="our-team" className="pb-8 sm:pb-12">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Our team</h2>
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <GlassPanel intensity="medium" className="rounded-xl p-5">
+              <h3 className="text-lg font-semibold">Vikram Sakthi Mandan</h3>
+              <p className="mt-1 text-sm font-medium text-muted-foreground">Outreach director</p>
+              <p className="mt-3 text-sm text-muted-foreground">bio coming soon</p>
+            </GlassPanel>
+          </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 px-2 pb-2 sm:px-4 sm:pb-3">
-        <GlassPanel intensity="subtle" className="rounded-2xl">
-          <div className="mx-auto flex h-12 max-w-6xl items-center justify-center gap-4 px-4 sm:px-6">
-            <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">
+      <footer className="border-t border-black/10 px-2 py-4 dark:border-white/15 sm:px-4">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-2 sm:flex-row sm:px-4">
+          <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/50">
               React + TypeScript
-            </span>
-            <span className="text-muted-foreground/15">&middot;</span>
-            <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">
-              Updates every second
-            </span>
-            <span className="text-muted-foreground/15">&middot;</span>
-            <span className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground/40">
-              Auto-adjusts yearly
-            </span>
+          </span>
+
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <LiquidButton
+              size="sm"
+              className="rounded-lg bg-black text-white dark:bg-white dark:text-black"
+              onClick={() =>
+                window.open("https://github.com/akshats2009/2026-done-timer", "_blank")
+              }
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </LiquidButton>
+            <LiquidButton
+              size="sm"
+              className="rounded-lg bg-black text-white dark:bg-white dark:text-black"
+              onClick={() => window.open("mailto:hello@example.com", "_blank")}
+            >
+              <Mail className="h-4 w-4" />
+              Contact
+            </LiquidButton>
+            <LiquidButton
+              size="sm"
+              className="rounded-lg bg-black text-white dark:bg-white dark:text-black"
+              onClick={scrollToTop}
+            >
+              Back to top
+              <ArrowUpRight className="h-4 w-4" />
+            </LiquidButton>
           </div>
-        </GlassPanel>
+        </div>
       </footer>
     </div>
   );

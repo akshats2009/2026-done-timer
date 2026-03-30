@@ -9,7 +9,7 @@ export function ThemeToggle() {
     <LiquidButton
       onClick={toggle}
       size="icon"
-      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+      className="h-9 w-9 text-foreground"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (

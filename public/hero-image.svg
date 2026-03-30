@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Abstract hero background">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4f6fb" />
+      <stop offset="45%" stop-color="#e8edf7" />
+      <stop offset="100%" stop-color="#d9e1ef" />
+    </linearGradient>
+    <linearGradient id="darkBand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.32" />
+      <stop offset="100%" stop-color="#111827" stop-opacity="0.16" />
+    </linearGradient>
+    <linearGradient id="lightBand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.78" />
+      <stop offset="100%" stop-color="#f8fafc" stop-opacity="0.38" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)" />
+  <path d="M0 820 L520 450 L980 740 L1460 340 L1920 610 L1920 1080 L0 1080 Z" fill="url(#darkBand)" />
+  <path d="M0 720 L420 500 L950 600 L1500 430 L1920 560 L1920 780 L0 930 Z" fill="url(#lightBand)" />
+  <circle cx="1620" cy="220" r="220" fill="#ffffff" fill-opacity="0.34" />
+  <circle cx="1420" cy="280" r="140" fill="#dbe5f3" fill-opacity="0.7" />
+  <circle cx="330" cy="230" r="170" fill="#f8fbff" fill-opacity="0.6" />
+</svg>
